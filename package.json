@@ -1,0 +1,43 @@
+{
+  "name": "express-api-version",
+  "version": "1.0.0",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "require": "./dist/index.cjs",
+    "import": "./dist/index.mjs",
+    "default": "./dist/index.mjs"
+  },
+  "scripts": {
+    "install": "npm run build",
+    "build": "npx --package=npm-run-all2 -- run-p --print-label build:**",
+    "build:cjs": "npx esbuild src/index.ts --bundle --packages=external --platform=node --target=node20 --format=cjs --outfile=dist/index.cjs",
+    "build:esm": "npx esbuild src/index.ts --bundle --packages=external --platform=node --target=node20 --format=esm --outfile=dist/index.mjs",
+    "build:dts": "npx --package=typescript -- tsc src/index.ts --declaration --emitDeclarationOnly --esModuleInterop --outDir dist",
+    "format": "npx prettier --write .",
+    "test": "npx vitest --coverage.enabled",
+    "coverage": "npx vitest run --coverage.enabled --coverage.thresholds.lines=80 --coverage.thresholds.functions=80 --coverage.thresholds.branches=80 --coverage.thresholds.statements=80"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.1",
+    "@types/semver": "^7.5.8",
+    "@vitest/coverage-v8": "^2.1.6",
+    "esbuild": "^0.24.0",
+    "node-mocks-http": "^1.16.1",
+    "npm-run-all2": "^7.0.1",
+    "prettier": "^3.4.1",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.6"
+  },
+  "dependencies": {
+    "semver": "^7.6.3"
+  },
+  "peerDependencies": {
+    "express": "^5.0.1"
+  }
+}
